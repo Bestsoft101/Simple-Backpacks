@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "backpacks",
+	"version": "${version}",
+	"name": "Backpacks",
+	"description": "Simple backpack mod!",
+	"authors": [
+		"Me!"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/backpacks/textures/item/backpack.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"b100.backpacks.BackpackMod"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.1",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
