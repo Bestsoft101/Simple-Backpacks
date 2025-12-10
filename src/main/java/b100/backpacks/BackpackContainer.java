@@ -24,7 +24,7 @@ public class BackpackContainer implements Container, MenuProvider {
 		
 		Integer backpackSize = item.get(BackpackMod.BACKPACK_SIZE_COMPONENT);
 		if(backpackSize == null) {
-			backpackSize = BackpackMod.BACKPACK_SIZE;
+			backpackSize = BackpackMod.BACKPACK_ROWS * 9;
 			item.set(BackpackMod.BACKPACK_SIZE_COMPONENT, backpackSize);
 		}
 		
@@ -32,7 +32,6 @@ public class BackpackContainer implements Container, MenuProvider {
 		items = NonNullList.withSize(size, ItemStack.EMPTY);
 		
 		ItemContainerContents contents = item.get(DataComponents.CONTAINER);
-		
 		if(contents != null) {
 			contents.copyInto(items);	
 		}

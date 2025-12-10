@@ -1,5 +1,7 @@
 package b100.backpacks;
 
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -10,49 +12,53 @@ import net.minecraft.world.item.ItemStack;
 
 public class BackpackMenu extends AbstractContainerMenu {
 	
-	public static final MenuType<?>[] MENU_TYPES_BY_SIZE = new MenuType[] {
-		MenuType.GENERIC_9x1,
-		MenuType.GENERIC_9x2,
-		MenuType.GENERIC_9x3,
-		MenuType.GENERIC_9x4,
-		MenuType.GENERIC_9x5,
-		MenuType.GENERIC_9x6
-	};
-	
-	private BackpackContainer container;
+	private Container container;
 	private int rows;
 	
-	public static BackpackMenu create(int id, BackpackContainer container, Inventory inventory) {
+	public static BackpackMenu create(int id, int rows, Inventory inventory) {
+		SimpleContainer container = new SimpleContainer(rows * 9);
+		
+		return create(id, container, inventory);
+	}
+	
+	public static BackpackMenu create(int id, Container container, Inventory inventory) {
 		int rows = container.getContainerSize() / 9;
 		
-		MenuType<?> menuType = MENU_TYPES_BY_SIZE[rows - 1];
+		MenuType<?> menuType = BackpackMod.BACKPACK_MENU_TYPES.get(rows - 1);
 		
 		return new BackpackMenu(menuType, id, container, inventory);
 	}
 	
-	private BackpackMenu(MenuType<?> menuType, int id, BackpackContainer container, Inventory inventory) {
+	private BackpackMenu(MenuType<?> menuType, int id, Container container, Inventory inventory) {
 		super(menuType, id);
 		this.container = container;
 		this.rows = container.getContainerSize() / 9;
+		
+		int xOffset = 8;
+		int yOffset = 18;
 		
 		// Backpack contents
 		for(int y = 0; y < rows; y++) {
 			for(int x = 0; x < 9; x++) {
 				// Shulker box slots prevent backpacks from being placed into other backpacks
-				addSlot(new ShulkerBoxSlot(container, y * 9 + x, 0, 0));
+				addSlot(new ShulkerBoxSlot(container, y * 9 + x, xOffset + 18 * x, yOffset + 18 * y));
 			}
 		}
+		
+		yOffset = 32 + rows * 18;
 		
 		// Main inventory
 		for(int y = 0; y < 3; y++) {
 			for(int x = 0; x < 9; x++) {
-				addSlot(new Slot(inventory, 9 + y * 9 + x, 0, 0));
+				addSlot(new Slot(inventory, 9 + y * 9 + x, xOffset + 18 * x, yOffset + 18 * y));
 			}
 		}
 		
+		yOffset = 90 + rows * 18;
+		
 		// Hotbar
 		for(int x = 0; x < 9; x++) {
-			addSlot(new Slot(inventory, x, 0, 0));
+			addSlot(new Slot(inventory, x, xOffset + 18 * x, yOffset));
 		}
 	}
 
@@ -84,6 +90,10 @@ public class BackpackMenu extends AbstractContainerMenu {
 	@Override
 	public boolean stillValid(Player player) {
 		return container.stillValid(player);
+	}
+	
+	public int getRows() {
+		return rows;
 	}
 	
 }
