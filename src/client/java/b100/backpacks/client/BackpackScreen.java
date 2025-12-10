@@ -1,5 +1,6 @@
-package b100.backpacks;
+package b100.backpacks.client;
 
+import b100.backpacks.BackpackMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -44,7 +45,6 @@ public class BackpackScreen extends AbstractContainerScreen<BackpackMenu> implem
 			guiGraphics.blit(CONTAINER_BACKGROUND, x0, y0 + yOffset, 0, 17, imageWidth, 18 * remaining);	
 			yOffset += 18 * remaining;
 		}
-		
 	}
 	
 }

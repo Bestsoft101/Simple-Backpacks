@@ -20,6 +20,9 @@ public class BackpackItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
 		ItemStack item = player.getItemInHand(interactionHand);
 		
+		// Assign a random ID to the backpack
+		BackpackMod.getBackpackID(item);
+		
 		player.openMenu(new BackpackContainer(item));
 		player.awardStat(Stats.ITEM_USED.get(this));
 		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 1.0f, 1.0f);

@@ -13,8 +13,17 @@
 	"entrypoints": {
 		"main": [
 			"b100.backpacks.BackpackMod"
+		],
+		"client": [
+			"b100.backpacks.client.BackpackModClient"
 		]
 	},
+	"mixins": [
+		{
+			"config": "backpacks.client.mixins.json",
+			"environment": "client"
+		}
+	],
 	"depends": {
 		"fabricloader": ">=0.18.1",
 		"minecraft": "~1.21.1",

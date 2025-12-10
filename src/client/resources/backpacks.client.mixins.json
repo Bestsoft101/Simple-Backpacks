@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "b100.backpacks.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ItemInHandRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
