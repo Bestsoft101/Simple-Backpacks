@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -53,6 +55,9 @@ public class BackpackMod implements ModInitializer {
 		Registry.register(BuiltInRegistries.ITEM, id("backpack"), BACKPACK);
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, id("size"), BACKPACK_SIZE_COMPONENT);
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, id("id"), BACKPACK_ID_COMPONENT);
+		
+		// Add to creative mode
+		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((itemGroup) -> itemGroup.accept(BACKPACK));
 	}
 	
 	private static <T> DataComponentType<T> dataComponent(Consumer<DataComponentType.Builder<T>> consumer) {
