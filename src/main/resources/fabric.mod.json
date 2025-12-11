@@ -16,6 +16,9 @@
 		],
 		"client": [
 			"b100.backpacks.client.BackpackModClient"
+		],
+		"shulkerboxtooltip": [
+			"b100.backpacks.client.ShulkerBoxTooltipIntegration"
 		]
 	},
 	"mixins": [
@@ -29,5 +32,8 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"shulkerboxtooltip": "*"
 	}
 }
