@@ -1,8 +1,5 @@
 package b100.backpacks;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -19,14 +16,7 @@ public class BackpackItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
 		ItemStack item = player.getItemInHand(interactionHand);
-		
-		// Assign a random ID to the backpack
-		BackpackMod.getBackpackID(item);
-		
-		player.openMenu(new BackpackContainer(item));
-		player.awardStat(Stats.ITEM_USED.get(this));
-		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 1.0f, 1.0f);
-		
+		BackpackUtil.openBackpack(player, item);
 		return InteractionResultHolder.sidedSuccess(item, level.isClientSide);
 	}
 	

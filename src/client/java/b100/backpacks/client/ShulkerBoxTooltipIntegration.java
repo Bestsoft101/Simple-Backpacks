@@ -11,6 +11,8 @@ public class ShulkerBoxTooltipIntegration implements ShulkerBoxTooltipApi {
 
 	@Override
 	public void registerProviders(PreviewProviderRegistry registry) {
+		BackpackMod.print("Setting up ShulkerBoxTooltip integration");
+		
 		registry.register(BackpackMod.id("backpack"), new BackpackPreviewProvider(BackpackMod.BACKPACK_ROWS * 9, false), BackpackMod.BACKPACK);
 	}
 	

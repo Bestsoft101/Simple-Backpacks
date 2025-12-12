@@ -3,30 +3,42 @@ package b100.backpacks;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 public class BackpackMod implements ModInitializer {
 	
-	public static final int MAX_ROWS = 9;
-	
 	public static final String MODID = "backpacks";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final boolean INDEV = FabricLoader.getInstance().isDevelopmentEnvironment();
+	public static final boolean TRINKETS_INSTALLED = FabricLoader.getInstance().isModLoaded("trinkets");
+	
+	static {
+		print("Trinkets installed: " + TRINKETS_INSTALLED);
+	}
+	
+	public static final int MAX_ROWS = 9;
 	
 	public static final Item BACKPACK = new BackpackItem(new Item.Properties().stacksTo(1));
 
@@ -50,6 +62,8 @@ public class BackpackMod implements ModInitializer {
 	
 	public static final int BACKPACK_ROWS = 3;
 	
+	public static final CustomPacketPayload.Type<CustomPacketPayload> CUSTOM_PAYLOAD_TYPE = new CustomPacketPayload.Type<>(BackpackMod.id("open_backpack"));
+	
 	@Override
 	public void onInitialize() {
 		Registry.register(BuiltInRegistries.ITEM, id("backpack"), BACKPACK);
@@ -58,6 +72,12 @@ public class BackpackMod implements ModInitializer {
 		
 		// Add to creative mode
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((itemGroup) -> itemGroup.accept(BACKPACK));
+		
+		// Setup packet
+		if(TRINKETS_INSTALLED) {
+			PayloadTypeRegistry.playC2S().register(BackpackMod.CUSTOM_PAYLOAD_TYPE, CustomPacketPayload.codec((packet, bb) -> {}, byteBuf -> () -> CUSTOM_PAYLOAD_TYPE));
+			ServerPlayNetworking.registerGlobalReceiver(BackpackMod.CUSTOM_PAYLOAD_TYPE, (payload, context) -> BackpackUtil.openEquippedBackpack(context.player()));
+		}
 	}
 	
 	private static <T> DataComponentType<T> dataComponent(Consumer<DataComponentType.Builder<T>> consumer) {
@@ -70,15 +90,12 @@ public class BackpackMod implements ModInitializer {
 		return ResourceLocation.fromNamespaceAndPath(MODID, id);
 	}
 	
-	public static int getBackpackID(ItemStack backpack) {
-		Integer id = backpack.get(BACKPACK_ID_COMPONENT);
-		
-		if(id == null) {
-			id = new Random().nextInt();
-			backpack.set(BACKPACK_ID_COMPONENT, id);
+	public static void print(String str) {
+		if(INDEV) {
+			System.out.print("[Backpacks] " + str + "\n");	
+		}else {
+			LOGGER.info("[Backpacks] " + str);
 		}
-		
-		return id;
 	}
 	
 }

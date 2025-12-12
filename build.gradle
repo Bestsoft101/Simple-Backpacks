@@ -11,12 +11,14 @@ base {
 }
 
 repositories {
-	// Mod Menu
 	maven {
 		name = "Terraformers"
 		url = "https://maven.terraformersmc.com/"
 	}
-	
+	maven {
+		name = "Ladysnake Libs"
+		url = 'https://maven.ladysnake.org/releases'
+	}
 	maven {
 		name = "Modrinth"
 		url = "https://api.modrinth.com/maven"
@@ -43,6 +45,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     modImplementation("maven.modrinth:shulkerboxtooltip:${project.shulkerboxtooltip_version}")
+    modImplementation("dev.emi:trinkets:${project.trinkets_version}")
 }
 
 processResources {

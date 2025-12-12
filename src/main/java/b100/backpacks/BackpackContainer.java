@@ -94,7 +94,7 @@ public class BackpackContainer implements Container, MenuProvider {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return player.getInventory().contains(item);
+		return BackpackUtil.isPlayerHoldingItem(player, item);
 	}
 
 	@Override

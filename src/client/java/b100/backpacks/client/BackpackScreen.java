@@ -47,4 +47,12 @@ public class BackpackScreen extends AbstractContainerScreen<BackpackMenu> implem
 		}
 	}
 	
+	@Override
+	public boolean keyPressed(int i, int j, int k) {
+		if(BackpackModClient.keyBinding != null && BackpackModClient.keyBinding.matches(i, j)) {
+			onClose();
+		}
+		return super.keyPressed(i, j, k);
+	}
+	
 }

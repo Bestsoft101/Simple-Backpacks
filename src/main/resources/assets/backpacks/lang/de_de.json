@@ -1,3 +1,5 @@
 {
-	"item.backpacks.backpack": "Rucksack"
+	"item.backpacks.backpack": "Rucksack",
+	"category.backpacks": "Backpacks",
+	"key.backpacks.openBackpack": "Rucksack Öffnen"
 }
