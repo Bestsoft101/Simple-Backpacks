@@ -1,0 +1,6 @@
+{
+	"keys": [
+		"backpacks:backpack"
+	],
+	"soundEvent": "minecraft:item.armor.equip_leather"
+}
