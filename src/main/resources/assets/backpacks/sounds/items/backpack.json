@@ -1,6 +1,22 @@
 {
 	"keys": [
-		"backpacks:backpack"
+		"backpacks:backpack",
+		"backpacks:white_backpack",
+		"backpacks:orange_backpack",
+		"backpacks:magenta_backpack",
+		"backpacks:light_blue_backpack",
+		"backpacks:yellow_backpack",
+		"backpacks:lime_backpack",
+		"backpacks:pink_backpack",
+		"backpacks:gray_backpack",
+		"backpacks:light_gray_backpack",
+		"backpacks:cyan_backpack",
+		"backpacks:purple_backpack",
+		"backpacks:blue_backpack",
+		"backpacks:brown_backpack",
+		"backpacks:green_backpack",
+		"backpacks:red_backpack",
+		"backpacks:black_backpack"
 	],
 	"soundEvent": "minecraft:item.armor.equip_leather"
 }

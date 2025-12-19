@@ -1,5 +1,21 @@
 {
 	"item.backpacks.backpack": "Backpack",
+	"item.backpacks.white_backpack": "White Backpack",
+	"item.backpacks.orange_backpack": "Orange Backpack",
+	"item.backpacks.magenta_backpack": "Magenta Backpack",
+	"item.backpacks.light_blue_backpack": "Light Blue Backpack",
+	"item.backpacks.yellow_backpack": "Yellow Backpack",
+	"item.backpacks.lime_backpack": "Lime Backpack",
+	"item.backpacks.pink_backpack": "Pink Backpack",
+	"item.backpacks.gray_backpack": "Gray Backpack",
+	"item.backpacks.light_gray_backpack": "Light Gray Backpack",
+	"item.backpacks.cyan_backpack": "Cyan Backpack",
+	"item.backpacks.purple_backpack": "Purple Backpack",
+	"item.backpacks.blue_backpack": "Blue Backpack",
+	"item.backpacks.brown_backpack": "Brown Backpack",
+	"item.backpacks.green_backpack": "Green Backpack",
+	"item.backpacks.red_backpack": "Red Backpack",
+	"item.backpacks.black_backpack": "Black Backpack",
 	"category.backpacks": "Backpacks",
 	"key.backpacks.openBackpack": "Open Backpack"
 }

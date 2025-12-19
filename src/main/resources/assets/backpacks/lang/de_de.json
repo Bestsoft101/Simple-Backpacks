@@ -1,5 +1,21 @@
 {
 	"item.backpacks.backpack": "Rucksack",
+	"item.backpacks.white_backpack": "Weißer Rucksack",
+	"item.backpacks.orange_backpack": "Oranger Rucksack",
+	"item.backpacks.magenta_backpack": "Magenta Rucksack",
+	"item.backpacks.light_blue_backpack": "Hellblauer Rucksack",
+	"item.backpacks.yellow_backpack": "Gelber Rucksack",
+	"item.backpacks.lime_backpack": "Hellgrüner Rucksack",
+	"item.backpacks.pink_backpack": "Rosa Rucksack",
+	"item.backpacks.gray_backpack": "Grauer Rucksack",
+	"item.backpacks.light_gray_backpack": "Hellgrauer Rucksack",
+	"item.backpacks.cyan_backpack": "Türkiser Rucksack",
+	"item.backpacks.purple_backpack": "Violetter Rucksack",
+	"item.backpacks.blue_backpack": "Blauer Rucksack",
+	"item.backpacks.brown_backpack": "Brauner Rucksack",
+	"item.backpacks.green_backpack": "Grüner Rucksack",
+	"item.backpacks.red_backpack": "Roter Rucksack",
+	"item.backpacks.black_backpack": "Schwarzer Rucksack",
 	"category.backpacks": "Backpacks",
 	"key.backpacks.openBackpack": "Rucksack Öffnen"
 }

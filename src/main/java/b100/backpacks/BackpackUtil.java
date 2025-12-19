@@ -11,6 +11,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class BackpackUtil {
@@ -18,7 +20,7 @@ public class BackpackUtil {
 	public static boolean openEquippedBackpack(Player player) {
 		if(BackpackMod.TRINKETS_INSTALLED) {
 			TrinketComponent trinketComponent = TrinketsApi.getTrinketComponent(player).get();
-			List<Tuple<SlotReference, ItemStack>> equipped = trinketComponent.getEquipped(BackpackMod.BACKPACK);
+			List<Tuple<SlotReference, ItemStack>> equipped = trinketComponent.getEquipped(stack -> BackpackUtil.isBackpack(stack));
 			if(equipped.size() > 0) {
 				return BackpackUtil.openBackpack(player, equipped.get(0).getB());
 			}
@@ -60,6 +62,38 @@ public class BackpackUtil {
 		}
 		
 		return id;
+	}
+	
+	public static boolean isBackpack(ItemStack item) {
+		return item.getItem() instanceof BackpackItem;
+	}
+	
+	public static boolean isBackpack(Item item) {
+		return item instanceof BackpackItem;
+	}
+	
+	public static int getBackpackColor(ItemStack item) {
+		return getBackpackColor(item.getItem());
+	}
+	
+	public static int getBackpackColor(Item item) {
+		if(item instanceof BackpackItem backpack) {
+			DyeColor color = backpack.getColor();
+			if(color != null) {
+				return color.getTextureDiffuseColor() | 0xFF000000;
+			}
+		}
+		return 0xFFF09954;
+	}
+	
+	public static ItemStack dye(ItemStack backpack, DyeColor dye) {
+		Item newItem;
+		if(dye != null) {
+			newItem = BackpackMod.DYED_BACKPACKS.get(dye);
+		}else {
+			newItem = BackpackMod.BACKPACK;
+		}
+		return backpack.transmuteCopy(newItem);
 	}
 	
 }

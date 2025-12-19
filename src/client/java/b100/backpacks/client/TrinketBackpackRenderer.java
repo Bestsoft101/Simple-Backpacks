@@ -18,7 +18,9 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class TrinketBackpackRenderer implements TrinketRenderer {
-
+	
+	public static final TrinketBackpackRenderer INSTANCE = new TrinketBackpackRenderer();
+	
 	@Override
 	public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, PoseStack matrices, MultiBufferSource vertexConsumers, int light,
 		LivingEntity player, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

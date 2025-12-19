@@ -5,6 +5,7 @@ import com.misterpemodder.shulkerboxtooltip.api.ShulkerBoxTooltipApi;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
 import com.misterpemodder.shulkerboxtooltip.api.provider.PreviewProviderRegistry;
 
+import b100.backpacks.BackpackItem;
 import b100.backpacks.BackpackMod;
 
 public class ShulkerBoxTooltipIntegration implements ShulkerBoxTooltipApi {
@@ -13,7 +14,9 @@ public class ShulkerBoxTooltipIntegration implements ShulkerBoxTooltipApi {
 	public void registerProviders(PreviewProviderRegistry registry) {
 		BackpackMod.print("Setting up ShulkerBoxTooltip integration");
 		
-		registry.register(BackpackMod.id("backpack"), new BackpackPreviewProvider(BackpackMod.BACKPACK_ROWS * 9, false), BackpackMod.BACKPACK);
+		for(BackpackItem item : BackpackMod.ALL_BACKPACKS) {
+			registry.register(BackpackMod.getBackpackID(item.getColor()), new BackpackPreviewProvider(9, false), item);
+		}
 	}
 	
 	public static class BackpackPreviewProvider extends BlockEntityPreviewProvider {
