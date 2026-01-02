@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,7 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BackpackItem extends Item {
@@ -42,29 +46,44 @@ public class BackpackItem extends Item {
 	
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
+		Level world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		Player player = context.getPlayer();
+		InteractionHand hand = context.getHand();
+		ItemStack backpack = player.getItemInHand(hand);
+		BlockState state = world.getBlockState(pos);
+		
 		if(color != null) {
-			Player player = context.getPlayer();
-			Level world = context.getLevel();
-			BlockPos pos = context.getClickedPos();
-			
-			BlockState state = world.getBlockState(pos);
 			if(state.is(Blocks.WATER_CAULDRON)) {
-				InteractionHand hand = context.getHand();
-				ItemStack backpack = player.getItemInHand(hand);
-				
 				if(!world.isClientSide) {
 					LayeredCauldronBlock.lowerFillLevel(state, world, pos);
-
 					player.level().playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.GENERIC_SWIM, SoundSource.PLAYERS, 1.0f, 1.0f);
-					
 					player.setItemInHand(hand, BackpackUtil.dye(backpack, null));
 				}
-				
 				return InteractionResult.sidedSuccess(world.isClientSide);
-			}	
+			}
 		}
 		
-		
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if(blockEntity instanceof Container container) {
+			if(state.getBlock() instanceof ChestBlock chestBlock && blockEntity instanceof ChestBlockEntity) {
+				container = ChestBlock.getContainer(chestBlock, state, world, pos, false);
+				if(container == null) {
+					return InteractionResult.FAIL;
+				}
+			}
+			
+			boolean containsItems = BackpackUtil.backpackContainsItems(backpack);
+			if(containsItems) {
+				if(!world.isClientSide) {
+					if(BackpackUtil.moveItemsIntoContainer(backpack, container)) {
+						player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 1.0f, 1.0f);	
+					}
+				}
+				return InteractionResult.sidedSuccess(world.isClientSide);
+			}
+			return InteractionResult.FAIL;
+		}
 		return super.useOn(context);
 	}
 	

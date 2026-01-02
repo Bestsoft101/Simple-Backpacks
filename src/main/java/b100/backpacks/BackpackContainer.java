@@ -14,24 +14,12 @@ public class BackpackContainer extends SimpleContainer implements MenuProvider {
 
 	private final ItemStack backpackItem;
 	
-	public static BackpackContainer create(ItemStack item) {
-		Integer backpackSize = item.get(BackpackMod.BACKPACK_SIZE_COMPONENT);
-		if(backpackSize == null) {
-			backpackSize = BackpackMod.BACKPACK_ROWS * 9;
-			item.set(BackpackMod.BACKPACK_SIZE_COMPONENT, backpackSize);
-		}
+	public BackpackContainer(ItemStack item) {
+		super(BackpackUtil.getBackpackSize(item));
 		
-		return new BackpackContainer(item, backpackSize);
-	}
-	
-	protected BackpackContainer(ItemStack item, int size) {
-		super(size);
 		this.backpackItem = item;
 		
-		ItemContainerContents contents = backpackItem.get(DataComponents.CONTAINER);
-		if(contents != null) {
-			contents.copyInto(items);	
-		}
+		BackpackUtil.copyBackpackItemsIntoList(backpackItem, items);
 		
 		addListener(container -> backpackItem.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items)));
 	}
