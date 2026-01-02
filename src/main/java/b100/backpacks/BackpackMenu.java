@@ -68,7 +68,7 @@ public class BackpackMenu extends AbstractContainerMenu {
 		Slot slot = slots.get(slotID);
 		
 		if (slot != null && slot.hasItem()) {
-			ItemStack slotItem = slot.getItem().copy();
+			ItemStack slotItem = slot.getItem();
 			if (slotID < rows * 9) {
 				if (!this.moveItemStackTo(slotItem, rows * 9, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
