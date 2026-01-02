@@ -38,7 +38,7 @@ public class BackpackUtil {
 		BackpackUtil.getBackpackID(item);
 		
 		player.awardStat(Stats.ITEM_USED.get(item.getItem()));
-		player.openMenu(new BackpackContainer(item));
+		player.openMenu(BackpackContainer.create(item));
 		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 1.0f, 1.0f);
 		return true;
 	}
